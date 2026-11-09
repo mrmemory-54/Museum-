@@ -1,0 +1,213 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+body, html {
+    width: 100%;
+    height: 100%;
+    background-color: #121212;
+    color: #fff;
+    overflow: hidden;
+}
+
+.screen {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    background: #111;
+    transition: opacity 0.5s ease;
+}
+
+.hidden {
+    display: none !important;
+}
+
+/* Loader Screen */
+.loader-content, .welcome-content {
+    text-align: center;
+}
+
+.loader-content h1, .welcome-content h1 {
+    font-size: 3rem;
+    margin-bottom: 10px;
+    font-weight: 300;
+    letter-spacing: 2px;
+}
+
+.loader-content p, .welcome-content p {
+    color: #aaa;
+    margin-bottom: 30px;
+}
+
+.progress-bar {
+    width: 300px;
+    height: 3px;
+    background: #333;
+    border-radius: 3px;
+    overflow: hidden;
+    margin: 0 auto 15px auto;
+}
+
+.progress {
+    width: 0%;
+    height: 100%;
+    background: #fff;
+    transition: width 0.1s linear;
+}
+
+/* Buttons */
+.btn {
+    background: #fff;
+    color: #000;
+    border: none;
+    padding: 12px 40px;
+    font-size: 1.1rem;
+    border-radius: 30px;
+    cursor: pointer;
+    font-weight: 600;
+    transition: 0.3s;
+    display: block;
+    margin: 0 auto 15px auto;
+}
+
+.btn:hover {
+    background: #ddd;
+}
+
+.btn-text {
+    background: none;
+    border: none;
+    color: #888;
+    cursor: pointer;
+    font-size: 0.9rem;
+}
+
+.btn-text:hover {
+    color: #fff;
+}
+
+/* Gallery Screen */
+#gallery-screen {
+    background: linear-gradient(to bottom, #1e1e1e, #0b0b0b);
+    justify-content: flex-start;
+}
+
+.gallery-header {
+    text-align: center;
+    padding: 20px;
+}
+
+.exhibit-title {
+    font-size: 0.75rem;
+    letter-spacing: 3px;
+    color: #888;
+    margin-bottom: 5px;
+}
+
+.museum-name {
+    font-size: 1.5rem;
+    font-weight: 600;
+}
+
+.gallery-room {
+    flex: 1;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+}
+
+.painting-wall {
+    display: flex;
+    gap: 40px;
+    justify-content: center;
+}
+
+.painting {
+    width: 220px;
+    height: 280px;
+    background: #222;
+    padding: 15px 15px 40px 15px;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+    cursor: pointer;
+    transition: transform 0.3s;
+}
+
+.painting:hover {
+    transform: scale(1.05);
+}
+
+.painting img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.gallery-footer {
+    padding: 20px;
+}
+
+.action-btn {
+    background: rgba(255, 255, 255, 0.1);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    color: #fff;
+    padding: 10px 20px;
+    border-radius: 20px;
+    cursor: pointer;
+    backdrop-filter: blur(5px);
+}
+
+.action-btn:hover {
+    background: rgba(255, 255, 255, 0.2);
+}
+
+/* Modal */
+.modal {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0,0,0,0.85);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+}
+
+.modal-content {
+    background: #1a1a1a;
+    padding: 20px;
+    border-radius: 10px;
+    text-align: center;
+    max-width: 400px;
+    position: relative;
+}
+
+.modal-content img {
+    width: 100%;
+    max-height: 350px;
+    object-fit: cover;
+    border-radius: 5px;
+    margin-bottom: 15px;
+}
+
+.close-btn {
+    position: absolute;
+    top: 10px;
+    right: 15px;
+    background: none;
+    border: none;
+    color: #fff;
+    font-size: 1.2rem;
+    cursor: pointer;
+}
