@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Our Virtual Museum</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <!-- Loading / Intro Screen -->
+    <div id="loader-screen" class="screen">
+        <div class="loader-content">
+            <h1>Our Museum</h1>
+            <p>From <span id="sender">Ethan</span> To <span id="receiver">Olivia</span></p>
+            <div class="progress-bar">
+                <div id="progress" class="progress"></div>
+            </div>
+            <p id="loading-text">Preparing the collection... 0%</p>
+        </div>
+    </div>
+
+    <!-- Welcome / Start Screen -->
+    <div id="welcome-screen" class="screen hidden">
+        <div class="welcome-content">
+            <h1>Our Museum</h1>
+            <p>From Ethan To Olivia</p>
+            <button id="start-btn" class="btn">Start</button>
+            <button id="fullscreen-btn" class="btn-text">Open in full screen</button>
+        </div>
+    </div>
+
+    <!-- Main Virtual Gallery Screen -->
+    <div id="gallery-screen" class="screen hidden">
+        <header class="gallery-header">
+            <div class="exhibit-title">A PERMANENT COLLECTION</div>
+            <div class="museum-name">Our Museum</div>
+        </header>
+
+        <div class="gallery-room">
+            <div class="painting-wall">
+                <div class="painting" onclick="openPhoto('photo1.jpg', 'Best gift ever! I love it so much ❤️')">
+                    <img src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=500" alt="Memory 1">
+                </div>
+                <div class="painting" onclick="openPhoto('photo2.jpg', 'Our beautiful memories together ✨')">
+                    <img src="https://images.unsplash.com/photo-1517841905240-472988babdf9?w=500" alt="Memory 2">
+                </div>
+            </div>
+        </div>
+
+        <div class="gallery-footer">
+            <button class="action-btn" onclick="triggerDance()">💃 Dance with me!</button>
+        </div>
+    </div>
+
+    <!-- Photo Modal Popup -->
+    <div id="photo-modal" class="modal hidden" onclick="closePhoto()">
+        <div class="modal-content" onclick="event.stopPropagation()">
+            <img id="modal-img" src="" alt="Zoomed Photo">
+            <p id="modal-caption"></p>
+            <button onclick="closePhoto()" class="close-btn">✕</button>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
