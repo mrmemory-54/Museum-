@@ -1,45 +1,314 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="bn">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Our Museum</title>
-    <link rel="stylesheet" href="style.css">
+    <title>Our Special Memories ❤️</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Poppins', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body {
+            background: linear-gradient(135deg, #0f0c20 0%, #1a0826 50%, #2a0826 100%);
+            color: #fff;
+            min-height: 100vh;
+            overflow-x: hidden;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        /* Floating Hearts Canvas */
+        #heart-canvas {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 1;
+        }
+
+        .container {
+            position: relative;
+            z-index: 2;
+            width: 100%;
+            max-width: 800px;
+            padding: 30px 20px;
+            text-align: center;
+        }
+
+        /* Music Floating Control */
+        .music-btn {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            z-index: 10;
+            background: rgba(255, 255, 255, 0.15);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            color: #fff;
+            padding: 10px 18px;
+            border-radius: 25px;
+            cursor: pointer;
+            font-size: 0.9rem;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.3);
+            transition: 0.3s;
+        }
+        .music-btn:hover {
+            background: rgba(255, 255, 255, 0.3);
+            transform: scale(1.05);
+        }
+
+        /* Header Section */
+        header h1 {
+            font-size: 2.2rem;
+            margin-bottom: 8px;
+            background: linear-gradient(45deg, #ff758c, #ff7eb3);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            font-weight: 700;
+        }
+
+        header p {
+            font-size: 1.1rem;
+            color: #d1d1d1;
+            margin-bottom: 25px;
+            letter-spacing: 1px;
+        }
+
+        /* Photo Gallery Grid */
+        .gallery-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+            gap: 20px;
+            margin-top: 30px;
+        }
+
+        .photo-card {
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 15px;
+            padding: 12px;
+            backdrop-filter: blur(5px);
+            cursor: pointer;
+            transition: all 0.4s ease;
+            box-shadow: 0 8px 20px rgba(0,0,0,0.4);
+        }
+
+        .photo-card:hover {
+            transform: translateY(-8px) scale(1.02);
+            border-color: rgba(255, 117, 140, 0.5);
+            box-shadow: 0 12px 25px rgba(255, 117, 140, 0.2);
+        }
+
+        .photo-card img {
+            width: 100%;
+            height: 220px;
+            object-fit: cover;
+            border-radius: 10px;
+        }
+
+        .photo-card h3 {
+            font-size: 1rem;
+            margin-top: 10px;
+            color: #ffb3c1;
+            font-weight: 500;
+        }
+
+        /* Interactive Note Box */
+        .love-note-box {
+            margin: 40px 0;
+            background: rgba(255, 255, 255, 0.07);
+            border-radius: 18px;
+            padding: 25px;
+            border: 1px dashed rgba(255, 117, 140, 0.4);
+        }
+
+        .love-note-box p {
+            font-size: 1.05rem;
+            line-height: 1.6;
+            color: #eaeaea;
+            font-style: italic;
+        }
+
+        /* Modal Popup */
+        .modal {
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(0,0,0,0.85);
+            display: none;
+            justify-content: center;
+            align-items: center;
+            z-index: 100;
+            backdrop-filter: blur(8px);
+        }
+
+        .modal-content {
+            background: #181124;
+            border: 1px solid rgba(255,255,255,0.2);
+            padding: 20px;
+            border-radius: 15px;
+            max-width: 400px;
+            width: 90%;
+            text-align: center;
+            position: relative;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.8);
+        }
+
+        .modal-content img {
+            width: 100%;
+            max-height: 320px;
+            object-fit: cover;
+            border-radius: 10px;
+            margin-bottom: 12px;
+        }
+
+        .modal-content p {
+            color: #ffcad4;
+            font-size: 1.1rem;
+        }
+
+        .close-btn {
+            position: absolute;
+            top: 10px;
+            right: 15px;
+            font-size: 1.5rem;
+            color: #fff;
+            cursor: pointer;
+        }
+    </style>
 </head>
 <body>
 
-    <!-- Main Virtual Gallery Screen (Directly Open) -->
-    <div id="gallery-screen" class="screen">
-        <header class="gallery-header">
-            <div class="exhibit-title">A PERMANENT COLLECTION</div>
-            <div class="museum-name">From Saron To Biddya</div>
+    <canvas id="heart-canvas"></canvas>
+
+    <!-- Music Control Button -->
+    <button class="music-btn" onclick="toggleMusic()">🎵 Play Music</button>
+    <audio id="bg-music" loop>
+        <!-- পছন্দের গান বা ব্যাকগ্রাউন্ড মিউজিকের লিংক দিতে পারো -->
+        <source src="https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3" type="audio/mpeg">
+    </audio>
+
+    <div class="container">
+        <header>
+            <h1>Our Permanent Gallery</h1>
+            <p>From Saron To Biddya ❤️</p>
         </header>
 
-        <div class="gallery-room">
-            <div class="painting-wall">
-                <div class="painting" onclick="openPhoto('photo1.jpg', 'Best gift ever! I love it so much ❤️')">
-                    <img src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=500" alt="Memory 1">
-                </div>
-                <div class="painting" onclick="openPhoto('photo2.jpg', 'Our beautiful memories together ✨')">
-                    <img src="https://images.unsplash.com/photo-1517841905240-472988babdf9?w=500" alt="Memory 2">
-                </div>
+        <!-- Gallery Section -->
+        <div class="gallery-grid">
+            <div class="photo-card" onclick="openPhoto('https://images.unsplash.com/photo-1517841905240-472988babdf9?w=500', 'আমাদের সুন্দর সবস্মৃতিগুলো সব সময় এভাবেই স্পেশাল থাকবে ✨')">
+                <img src="https://images.unsplash.com/photo-1517841905240-472988babdf9?w=500" alt="Memory 1">
+                <h3>Memory #1</h3>
+            </div>
+
+            <div class="photo-card" onclick="openPhoto('https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=500', 'তোর সাথে কাটানো প্রতিটি মুহূর্তই সেরা উপহার! 💖')">
+                <img src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=500" alt="Memory 2">
+                <h3>Memory #2</h3>
+            </div>
+
+            <div class="photo-card" onclick="openPhoto('https://images.unsplash.com/photo-1529626455594-4ff0802cfb7e?w=500', 'সবসময় পাশে থাকার জন্য ধন্যবাদ 🌸')">
+                <img src="https://images.unsplash.com/photo-1529626455594-4ff0802cfb7e?w=500" alt="Memory 3">
+                <h3>Memory #3</h3>
             </div>
         </div>
 
-        <div class="gallery-footer">
-            <button class="action-btn" onclick="triggerDance()">💃 Dance with me!</button>
+        <!-- Special Love Note Section -->
+        <div class="love-note-box">
+            <p>"পৃথিবীর সব স্মৃতি ম্লান হয়ে যেতে পারে, কিন্তু আমাদের সুন্দর এই স্মৃতিগুলো সব সময় ডিজিটাল এই ক্যানভাসে চিরজীবনের মতো অমর হয়ে থাকবে।" ✨</p>
         </div>
     </div>
 
-    <!-- Photo Modal Popup -->
-    <div id="photo-modal" class="modal hidden" onclick="closePhoto()">
+    <!-- Modal for Photo Preview -->
+    <div id="modal" class="modal" onclick="closePhoto()">
         <div class="modal-content" onclick="event.stopPropagation()">
-            <img id="modal-img" src="" alt="Zoomed Photo">
-            <p id="modal-caption"></p>
-            <button onclick="closePhoto()" class="close-btn">✕</button>
+            <span class="close-btn" onclick="closePhoto()">&times;</span>
+            <img id="modal-img" src="" alt="Memory">
+            <p id="modal-text"></p>
         </div>
     </div>
 
-    <script src="script.js"></script>
+    <script>
+        // Music Toggle
+        const music = document.getElementById('bg-music');
+        const musicBtn = document.querySelector('.music-btn');
+        let isPlaying = false;
+
+        function toggleMusic() {
+            if (isPlaying) {
+                music.pause();
+                musicBtn.innerHTML = '🎵 Play Music';
+            } else {
+                music.play();
+                musicBtn.innerHTML = '⏸️ Pause Music';
+            }
+            isPlaying = !isPlaying;
+        }
+
+        // Modal Logic
+        function openPhoto(src, caption) {
+            document.getElementById('modal-img').src = src;
+            document.getElementById('modal-text').innerText = caption;
+            document.getElementById('modal').style.display = 'flex';
+        }
+
+        function closePhoto() {
+            document.getElementById('modal').style.display = 'none';
+        }
+
+        // Floating Hearts Animation Canvas
+        const canvas = document.getElementById('heart-canvas');
+        const ctx = canvas.getContext('2d');
+        let hearts = [];
+
+        function resizeCanvas() {
+            canvas.width = window.innerWidth;
+            canvas.height = window.innerHeight;
+        }
+        window.addEventListener('resize', resizeCanvas);
+        resizeCanvas();
+
+        class Heart {
+            constructor() {
+                this.x = Math.random() * canvas.width;
+                this.y = canvas.height + Math.random() * 100;
+                this.size = Math.random() * 12 + 8;
+                this.speedY = Math.random() * 1.5 + 0.5;
+                this.opacity = Math.random() * 0.7 + 0.3;
+            }
+            update() {
+                this.y -= this.speedY;
+                if (this.y < -20) {
+                    this.y = canvas.height + 20;
+                    this.x = Math.random() * canvas.width;
+                }
+            }
+            draw() {
+                ctx.fillStyle = `rgba(255, 117, 140, ${this.opacity})`;
+                ctx.beginPath();
+                ctx.arc(this.x, this.y, this.size / 2, 0, Math.PI * 2);
+                ctx.fill();
+            }
+        }
+
+        for (let i = 0; i < 35; i++) {
+            hearts.push(new Heart());
+        }
+
+        function animate() {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            hearts.forEach(heart => {
+                heart.update();
+                heart.draw();
+            });
+            requestAnimationFrame(animate);
+        }
+        animate();
+    </script>
 </body>
 </html>
